@@ -76,123 +76,11 @@ const MILESTONES = [
   { title: "Private glider license", meta: "Requires age 16 · January 2028", state: "locked" },
 ];
 
-const POWERED_TASKS = [
-  {
-    id: "airplane-handbook",
-    title: "Read the FAA Airplane Flying Handbook",
-    note: "This handbook covers basic airplane aerodynamics, systems, and safe flying techniques.",
-    link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_flying_handbook",
-    linkLabel: "Open the handbook",
-  },
-  {
-    id: "medical",
-    title: "Schedule a medical exam or BasicMed appointment",
-    note: "A valid FAA medical or BasicMed is required before you can solo in an airplane.",
-    link: "https://www.faa.gov/pilots/medical",
-    linkLabel: "Check medical options",
-  },
-  {
-    id: "iacra-airplane",
-    title: "Register for IACRA and save your FTN",
-    note: "Create your FAA profile and prepare for your student pilot certificate application.",
-    link: "https://iacra.faa.gov",
-    linkLabel: "Go to IACRA",
-  },
-  {
-    id: "groundschool",
-    title: "Start a PPL ground school course",
-    note: "Ground school is the fastest way to build the knowledge you need for the written exam.",
-    link: "https://www.faasafety.gov",
-    linkLabel: "Browse FAA safety courses",
-  },
-  {
-    id: "vspeeds",
-    title: "Memorize airplane V-speeds and limits",
-    note: "Know the important airspeeds for takeoff, landing, and emergencies before your first flight.",
-    link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_flying_handbook",
-    linkLabel: "Review V-speeds",
-  },
-  {
-    id: "sectional",
-    title: "Study sectional charts and local airspace",
-    note: "You need to be comfortable with controlled airspace, airports, and navigation before cross-country flights.",
-    link: "https://skyvector.com",
-    linkLabel: "Open SkyVector",
-  },
-];
-
-const POWERED_CHANNELS = [
-  { name: "FlightChops", desc: "Reality-based training flights, mistakes, and real-world airplane flying." },
-  { name: "Captain Joe", desc: "Calm airplane tutorials, trip reports, and real IFR planning." },
-  { name: "MZeroA Flight Training", desc: "Step-by-step private pilot training and exam prep." },
-  { name: "Pilot Workshops", desc: "Practical instruction on maneuvers, landings, and weather." },
-  { name: "Nerdbird", desc: "Flight training content with an emphasis on proficiency and safe habits." },
-  { name: "Just Plane English", desc: "Big-picture airplane flying and transition training videos." },
-  { name: "Airplane GEEKs", desc: "A pilot community focused on learning and inspiration." },
-  { name: "Steveo1kinevo", desc: "Utility flying, plane camping, and real pilot stories." },
-  { name: "The Finer Points", desc: "Detailed training maneuvers and airplane skill-building." },
-  { name: "FlyWithLukas", desc: "Clean, modern airplane training and flight planning videos." },
-];
-
-const POWERED_FUN = [
-  { name: "X-Plane 12", desc: "A high-fidelity airplane simulator for practicing procedures and navigation.", link: "https://www.x-plane.com" },
-  { name: "Microsoft Flight Simulator", desc: "Fly real airports and terrain in a highly polished sim.", link: "https://www.flightsimulator.com" },
-  { name: "ForeFlight", desc: "Study flight planning tools and weather briefing workflows.", link: "https://www.foreflight.com" },
-  { name: "AOPA Air Safety Institute", desc: "Free safety courses and scenario-based training.", link: "https://www.aopa.org/safety" },
-  { name: "Redbird Flight", desc: "Simulator training resources used by real flight schools.", link: "https://redbirdflight.com" },
-  { name: "PilotWorkshops", desc: "Short lessons on real-world instrument and cross-country flying.", link: "https://www.pilotworkshops.com" },
-];
-
-const POWERED_MILESTONES = [
-  { title: "Student pilot certificate", meta: "Eligible now at 16", state: "now" },
-  { title: "Ground school and written exam", meta: "Study while you train", state: "focus" },
-  { title: "First solo", meta: "Solo after your instructor signs you off", state: "next" },
-  { title: "Private pilot checkride", meta: "Ready when you meet FAA requirements", state: "locked" },
-];
-
-const POWERED_BUDGET_GOAL = 12000;
-const poweredYtSearch = (name) =>
-  "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " powered flight");
-
-const GLIDER_RESOURCES = [
-  {
-    name: "Glider Pilots Ground School",
-    meta: "Book and live course · about 30 dollars",
-    link: "https://gliderpilotsgroundschool.com",
-  },
-  {
-    name: "Dauntless GroundSchool",
-    meta: "App, covers PGL · about 60 to 70 dollars",
-    link: "https://apps.apple.com/us/app/faa-private-pilot-prep/id552933297",
-  },
-  {
-    name: "Schedule the real test",
-    meta: "faa.psiexams.com · when you are ready",
-    link: "https://faa.psiexams.com",
-  },
-];
-
-const POWERED_RESOURCES = [
-  {
-    name: "Sporty's Pilot Shop",
-    meta: "PPL training materials, videos, and prep books.",
-    link: "https://www.sportys.com",
-  },
-  {
-    name: "King Schools",
-    meta: "FAA test prep and pilot training courses for airplane certificates.",
-    link: "https://www.kingschools.com",
-  },
-  {
-    name: "FAA Airman Certification Standards",
-    meta: "Study the checkride standards for Private Pilot Airplane.",
-    link: "https://www.faa.gov/training_testing/testing/acs/",
-  },
-];
-
 const BUDGET_GOAL = 6000;
 const ytSearch = (name) =>
   "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " glider soaring");
+
+// ---------- helpers ----------
 
 function bezier(t, p0, p1, p2) {
   const mt = 1 - t;
@@ -201,12 +89,15 @@ function bezier(t, p0, p1, p2) {
     y: mt * mt * p0.y + 2 * mt * t * p1.y + t * t * p2.y,
   };
 }
+
 function bezierAngle(t, p0, p1, p2) {
   const mt = 1 - t;
   const dx = 2 * mt * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
   const dy = 2 * mt * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
   return (Math.atan2(dy, dx) * 180) / Math.PI;
 }
+
+// ---------- hero flight path ----------
 
 function FlightPath({ pct }) {
   const P0 = { x: 18, y: 158 };
@@ -260,6 +151,8 @@ function FlightPath({ pct }) {
   );
 }
 
+// ---------- small ui ----------
+
 function Eyebrow({ children }) {
   return <div className="eyebrow">{children}</div>;
 }
@@ -286,8 +179,9 @@ function Ring({ pct, label }) {
   );
 }
 
+// ---------- main ----------
+
 function App() {
-  const [page, setPage] = useState("glider");
   const [loaded, setLoaded] = useState(false);
   const [tasks, setTasks] = useState({});
   const [scores, setScores] = useState([]);
@@ -298,14 +192,11 @@ function App() {
   const [justSaved, setJustSaved] = useState(false);
   const saveTimer = useRef(null);
 
-  const storageKey = page === "powered" ? "powered-flight-prep-v1" : "glider-prep-v1";
-
   useEffect(() => {
-    setLoaded(false);
     (async () => {
       try {
         const storage = window.storage ?? window.localStorage;
-        const raw = storage.get ? await storage.get(storageKey) : storage.getItem(storageKey);
+        const raw = storage.get ? await storage.get("glider-prep-v1") : storage.getItem("glider-prep-v1");
         const value = raw && raw.value ? raw.value : raw;
         if (value) {
           const d = JSON.parse(value);
@@ -313,18 +204,13 @@ function App() {
           setScores(Array.isArray(d.scores) ? d.scores : []);
           setSaved(typeof d.saved === "number" ? d.saved : 0);
           setSavedInput(d.saved ? String(d.saved) : "");
-        } else {
-          setTasks({});
-          setScores([]);
-          setSaved(0);
-          setSavedInput("");
         }
       } catch (e) {
       } finally {
         setLoaded(true);
       }
     })();
-  }, [storageKey]);
+  }, []);
 
   useEffect(() => {
     if (!loaded) return;
@@ -333,9 +219,9 @@ function App() {
         const storage = window.storage ?? window.localStorage;
         const payload = JSON.stringify({ tasks, scores, saved });
         if (storage.set) {
-          await storage.set(storageKey, payload, false);
+          await storage.set("glider-prep-v1", payload, false);
         } else {
-          storage.setItem(storageKey, payload);
+          storage.setItem("glider-prep-v1", payload);
         }
         setJustSaved(true);
         clearTimeout(saveTimer.current);
@@ -343,21 +229,13 @@ function App() {
       } catch (e) {
       }
     })();
-  }, [tasks, scores, saved, loaded, storageKey]);
+  }, [tasks, scores, saved, loaded]);
 
-  const currentTasks = page === "powered" ? POWERED_TASKS : TASKS;
-  const currentChannels = page === "powered" ? POWERED_CHANNELS : CHANNELS;
-  const currentFun = page === "powered" ? POWERED_FUN : FUN;
-  const currentMilestones = page === "powered" ? POWERED_MILESTONES : MILESTONES;
-  const currentResources = page === "powered" ? POWERED_RESOURCES : GLIDER_RESOURCES;
-  const currentBudgetGoal = page === "powered" ? POWERED_BUDGET_GOAL : BUDGET_GOAL;
-  const currentYtSearch = page === "powered" ? poweredYtSearch : ytSearch;
-
-  const tasksDone = useMemo(() => currentTasks.filter((t) => tasks[t.id]).length, [tasks, currentTasks]);
-  const taskFrac = tasksDone / currentTasks.length;
+  const tasksDone = useMemo(() => TASKS.filter((t) => tasks[t.id]).length, [tasks]);
+  const taskFrac = tasksDone / TASKS.length;
   const scores90 = useMemo(() => scores.filter((s) => s.score >= 90).length, [scores]);
   const writtenFrac = Math.min(scores90, 3) / 3;
-  const budgetFrac = Math.min(saved / currentBudgetGoal, 1);
+  const budgetFrac = Math.min(saved / BUDGET_GOAL, 1);
   const overall = Math.round((taskFrac * 0.5 + writtenFrac * 0.3 + budgetFrac * 0.2) * 100);
 
   const subline =
@@ -365,9 +243,7 @@ function App() {
     : overall >= 67 ? "High and fast. Almost at cruise."
     : overall >= 34 ? "Climbing well. Stay in the lift."
     : overall > 0 ? "Off the ground. Keep the nose up."
-    : page === "powered"
-      ? "Ready the radios and charts. Start the airplane prep."
-      : "Wheels still chocked. Pick a task and start your climb.";
+    : "Wheels still chocked. Pick a task and start your climb.";
 
   const toggle = (id) => setTasks((p) => ({ ...p, [id]: !p[id] }));
 
@@ -391,26 +267,23 @@ function App() {
     setSavedInput(String(v));
   };
 
-  const lessonsCovered = Math.floor(saved / (page === "powered" ? 400 : 350));
-  const remaining = Math.max(0, currentBudgetGoal - saved);
+  const lessonsCovered = Math.floor(saved / 350);
+  const remaining = Math.max(0, BUDGET_GOAL - saved);
 
   return (
     <div className="wrap">
+      <style>{css}</style>
+
       <div className="savepill" data-on={justSaved}>Progress saved</div>
 
       <header className="head">
-        <div className="pageTabs">
-          <button className={"tab" + (page === "glider" ? " active" : "")} onClick={() => setPage("glider")}>Glider Prep</button>
-          <button className={"tab" + (page === "powered" ? " active" : "")} onClick={() => setPage("powered")}>Powered Flight</button>
-        </div>
         <div className="badge">
-          <span className="badgeDot" /> {page === "powered" ? "Mile High Powered Flight · Airplane prep" : "Mile High Gliding · Waitlist prep"}
+          <span className="badgeDot" /> Mile High Gliding · Waitlist prep
         </div>
-        <h1>{page === "powered" ? "Powered Flight Prep Dashboard" : "Glider Prep Dashboard"}</h1>
+        <h1>Glider Prep Dashboard</h1>
         <p className="sub">
-          {page === "powered"
-            ? "Build airplane knowledge, medical readiness, and flight training momentum before your first PPL lesson."
-            : "Every task you finish is altitude in the bank. Build the knowledge now so your real lessons are faster, cheaper, and a lot more fun."}
+          Every task you finish is altitude in the bank. Build the knowledge now so your real lessons are
+          faster, cheaper, and a lot more fun.
         </p>
       </header>
 
@@ -429,20 +302,20 @@ function App() {
         </div>
         <FlightPath pct={overall} />
         <div className="heroFoot">
-          <span>{page === "powered" ? "Engine start" : "Wheels up"}</span>
-          <span>{page === "powered" ? "Private pilot license" : "Private glider license"}</span>
+          <span>Wheels up</span>
+          <span>Private glider license</span>
         </div>
       </section>
 
       <section className="card">
         <Eyebrow>Priority checklist</Eyebrow>
         <h2>Six things to start now</h2>
-        <p className="lead">{tasksDone} of {currentTasks.length} done. Tap a row to check it off. Your progress is saved automatically.</p>
+        <p className="lead">{tasksDone} of {TASKS.length} done. Tap a row to check it off. Your progress is saved automatically.</p>
         <div className="tasks">
-          {currentTasks.map((t) => {
+          {TASKS.map((t) => {
             const on = !!tasks[t.id];
             return (
-              <div key={t.id} className={"task" + (on ? " on" : "")}> 
+              <div key={t.id} className={"task" + (on ? " on" : "")}>
                 <button className="box" onClick={() => toggle(t.id)} aria-pressed={on} aria-label={"Mark " + t.title}>
                   {on && (
                     <svg viewBox="0 0 24 24" width="15" height="15"><path d="M5 13l4 4L19 7" fill="none" stroke="#06121f" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -464,7 +337,7 @@ function App() {
 
       <section className="card">
         <Eyebrow>Written exam tracker</Eyebrow>
-        <h2>{page === "powered" ? "Private Pilot Airplane (PPA)" : "Private Pilot Glider (PGL)"}</h2>
+        <h2>Private Pilot Glider (PGL)</h2>
         <div className="facts">
           <div><b>60</b><span>questions</span></div>
           <div><b>70%</b><span>to pass</span></div>
@@ -506,37 +379,25 @@ function App() {
         )}
 
         <div className="reslinks">
-          {currentResources.map((r) => (
-            <a key={r.name} href={r.link} target="_blank" rel="noopener noreferrer" className="rescard">
-              <div className="resname">{r.name}</div>
-              <div className="resmeta">{r.meta}</div>
-            </a>
-          ))}
+          <a href="https://gliderpilotsgroundschool.com" target="_blank" rel="noopener noreferrer" className="rescard">
+            <div className="resname">Glider Pilots Ground School</div>
+            <div className="resmeta">Book and live course · about 30 dollars</div>
+          </a>
+          <a href="https://apps.apple.com/us/app/faa-private-pilot-prep/id552933297" target="_blank" rel="noopener noreferrer" className="rescard">
+            <div className="resname">Dauntless GroundSchool</div>
+            <div className="resmeta">App, covers PGL · about 60 to 70 dollars</div>
+          </a>
+          <a href="https://faa.psiexams.com" target="_blank" rel="noopener noreferrer" className="rescard">
+            <div className="resname">Schedule the real test</div>
+            <div className="resmeta">faa.psiexams.com · when you are ready</div>
+          </a>
         </div>
       </section>
 
-      {page === "powered" && (
-        <section className="card">
-          <Eyebrow>FAA requirements</Eyebrow>
-          <h2>Powered pilot minimums</h2>
-          <p className="lead">These are the FAA-required totals and milestones for the Private Pilot Airplane certificate.</p>
-          <div className="reqgrid">
-            <div><b>40</b><span>flight hours minimum</span></div>
-            <div><b>20</b><span>dual instruction hours</span></div>
-            <div><b>10</b><span>solo flight hours</span></div>
-            <div><b>3</b><span>cross-country hours</span></div>
-            <div><b>3</b><span>night flying hours</span></div>
-            <div><b>3</b><span>instrument training hours</span></div>
-            <div><b>1</b><span>checkride with examiner</span></div>
-            <div><b>16</b><span>minimum age in years</span></div>
-          </div>
-        </section>
-      )}
-
       <section className="card">
         <Eyebrow>Budget tracker</Eyebrow>
-        <h2>The climb to ${currentBudgetGoal.toLocaleString()} dollars</h2>
-        <p className="lead">Full path to a private {page === "powered" ? "pilot airplane" : "glider"} license runs about {currentBudgetGoal.toLocaleString()} dollars. Lessons cost roughly 250 to 450 dollars each.</p>
+        <h2>The climb to 6,000 dollars</h2>
+        <p className="lead">Full path to a private glider license runs about 6,000 dollars. Lessons cost roughly 250 to 450 dollars each.</p>
 
         <div className="moneyhead">
           <div className="moneybig">${saved.toLocaleString()}<span> saved</span></div>
@@ -569,7 +430,7 @@ function App() {
         <Eyebrow>Your flight plan</Eyebrow>
         <h2>Milestones to the license</h2>
         <div className="timeline">
-          {currentMilestones.map((m, i) => (
+          {MILESTONES.map((m, i) => (
             <div key={i} className={"mile " + m.state}>
               <div className="mileNode">
                 {m.state === "locked" ? (
@@ -594,8 +455,8 @@ function App() {
         <h2>Channels worth your time</h2>
         <p className="lead">Soaking these up while you wait builds real instinct. Each opens the creator on YouTube.</p>
         <div className="ytgrid">
-          {currentChannels.map((c) => (
-            <a key={c.name} className="yt" href={currentYtSearch(c.name)} target="_blank" rel="noopener noreferrer">
+          {CHANNELS.map((c) => (
+            <a key={c.name} className="yt" href={ytSearch(c.name)} target="_blank" rel="noopener noreferrer">
               <div className="ytname">{c.name}</div>
               <div className="ytdesc">{c.desc}</div>
             </a>
@@ -607,7 +468,7 @@ function App() {
         <Eyebrow>Optional but fun</Eyebrow>
         <h3 className="h3">Not required, just awesome</h3>
         <div className="ytgrid">
-          {currentFun.map((f) => (
+          {FUN.map((f) => (
             <a key={f.name} className="yt fun" href={f.link} target="_blank" rel="noopener noreferrer">
               <div className="ytname">{f.name}</div>
               <div className="ytdesc">{f.desc}</div>
@@ -622,6 +483,197 @@ function App() {
     </div>
   );
 }
+
+const css = `
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+.wrap {
+  --ink:#eaf1f8; --muted:#90a6bd; --lift:#44d07b; --sun:#ffb454;
+  --card:#0f2034; --card2:#13283f; --line:rgba(255,255,255,0.09);
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(120% 80% at 80% -10%, rgba(255,180,84,0.10), transparent 55%),
+    radial-gradient(120% 90% at 0% 0%, rgba(68,208,123,0.08), transparent 50%),
+    linear-gradient(180deg,#081325 0%,#060f1c 100%);
+  min-height:100vh;
+  padding:22px 16px 60px;
+  max-width:760px; margin:0 auto;
+}
+@media (min-width:600px){ .wrap{ padding:34px 28px 70px; } }
+
+.savepill{
+  position:fixed; top:12px; left:50%; transform:translate(-50%,-24px);
+  background:var(--lift); color:#06121f; font-weight:700; font-size:12px;
+  padding:6px 14px; border-radius:999px; opacity:0; pointer-events:none;
+  transition:transform .35s ease, opacity .35s ease; z-index:50;
+  font-family:'Chakra Petch',sans-serif; letter-spacing:.3px;
+}
+.savepill[data-on="true"]{ opacity:1; transform:translate(-50%,0); }
+
+.head{ margin-bottom:20px; }
+.badge{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:1.4px;
+  text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--line); padding:6px 12px; border-radius:999px;
+}
+.badgeDot{ width:7px;height:7px;border-radius:50%;background:var(--lift); box-shadow:0 0 10px var(--lift); }
+h1{
+  font-family:'Chakra Petch',sans-serif; font-weight:700;
+  font-size:clamp(30px,8vw,44px); line-height:1.02; margin:14px 0 8px;
+  letter-spacing:-0.5px;
+}
+.sub{ color:var(--muted); font-size:15px; line-height:1.55; max-width:54ch; margin:0; }
+
+.eyebrow{
+  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--sun); margin-bottom:8px;
+}
+
+.hero{
+  border:1px solid var(--line); border-radius:22px; padding:20px;
+  background:linear-gradient(180deg, rgba(20,40,63,0.9), rgba(10,21,37,0.9));
+  margin-bottom:16px; overflow:hidden;
+}
+.heroTop{ display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+.bigpct{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:clamp(48px,14vw,72px); line-height:.9; }
+.bigpct span{ font-size:.4em; color:var(--muted); margin-left:4px; }
+.bigsub{ color:var(--ink); opacity:.85; font-size:14px; margin-top:6px; max-width:30ch; }
+.chips{ display:flex; flex-direction:column; gap:8px; }
+.chip{ display:flex; align-items:center; gap:9px; background:rgba(255,255,255,0.04); border:1px solid var(--line); padding:6px 12px 6px 6px; border-radius:14px; }
+.chipPct{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:15px; line-height:1; }
+.chipLabel{ font-size:11px; color:var(--muted); }
+.flightsvg{ width:100%; height:auto; margin-top:14px; display:block; }
+.glider{ animation:bob 4s ease-in-out infinite; transform-box:fill-box; }
+.heroFoot{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-family:'Chakra Petch',sans-serif; letter-spacing:.5px; margin-top:4px; }
+
+.card{
+  border:1px solid var(--line); border-radius:20px; padding:20px;
+  background:rgba(15,32,52,0.55); margin-bottom:16px;
+}
+h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; margin:2px 0 4px; letter-spacing:-.2px; }
+.h3{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:18px; margin:2px 0 10px; }
+.lead{ color:var(--muted); font-size:14px; line-height:1.55; margin:6px 0 16px; }
+
+.tasks{ display:flex; flex-direction:column; gap:10px; }
+.task{
+  display:flex; align-items:flex-start; gap:13px;
+  background:rgba(255,255,255,0.02); border:1px solid var(--line);
+  border-radius:14px; padding:13px; transition:border-color .2s, background .2s;
+}
+.task.on{ border-color:rgba(68,208,123,0.4); background:rgba(68,208,123,0.06); }
+.box{
+  flex:none; width:26px; height:26px; border-radius:8px; margin-top:1px;
+  border:2px solid var(--muted); background:transparent; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all .18s;
+}
+.task.on .box{ background:var(--lift); border-color:var(--lift); }
+.taskBody{ flex:1; cursor:pointer; min-width:0; }
+.taskTitle{ font-weight:600; font-size:15px; }
+.task.on .taskTitle{ color:var(--lift); }
+.taskNote{ color:var(--muted); font-size:13px; line-height:1.5; margin-top:3px; }
+.taskLink{
+  flex:none; align-self:center; display:inline-flex; align-items:center; gap:5px;
+  color:var(--sun); text-decoration:none; font-size:12.5px; font-weight:600;
+  border:1px solid rgba(255,180,84,0.3); border-radius:10px; padding:7px 11px;
+  white-space:nowrap; transition:background .2s;
+}
+.taskLink:hover{ background:rgba(255,180,84,0.12); }
+
+.facts{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
+.facts div{ background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:12px; padding:11px 8px; text-align:center; }
+.facts b{ display:block; font-family:'Chakra Petch',sans-serif; font-size:19px; }
+.facts span{ font-size:11px; color:var(--muted); }
+
+.goalrow{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.goalbar{ flex:1; height:10px; background:rgba(255,255,255,0.07); border-radius:99px; overflow:hidden; }
+.goalbar.tall{ height:14px; }
+.goalfill{ height:100%; background:linear-gradient(90deg,#44d07b,#7be3a5); border-radius:99px; transition:width .6s ease; }
+.goalfill.amber{ background:linear-gradient(90deg,#ffb454,#ffd08a); }
+.goalcount{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:14px; color:var(--lift); }
+
+.entry{ display:flex; gap:9px; margin-top:6px; }
+.in{
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line);
+  border-radius:12px; padding:12px 14px; color:var(--ink); font-size:15px; font-family:inherit;
+}
+.in:focus{ outline:none; border-color:var(--sun); }
+.in::placeholder{ color:var(--muted); }
+.btn{
+  background:var(--lift); color:#06121f; border:none; border-radius:12px;
+  padding:0 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
+  transition:filter .2s;
+}
+.btn:hover{ filter:brightness(1.08); }
+
+.scorelist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.scoreitem{
+  display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03);
+  border:1px solid var(--line); border-radius:11px; padding:8px 8px 8px 12px;
+}
+.scoreitem b{ font-family:'Chakra Petch',sans-serif; font-size:15px; }
+.dot{ width:9px;height:9px;border-radius:50%; }
+.dot.good{ background:var(--lift); box-shadow:0 0 8px rgba(68,208,123,.6); }
+.dot.low{ background:var(--sun); }
+.scoredate{ font-size:12px; color:var(--muted); }
+.rm{ background:none; border:none; color:var(--muted); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; }
+.rm:hover{ color:#ff6b6b; }
+
+.reslinks{ display:flex; flex-direction:column; gap:9px; margin-top:18px; }
+.rescard{ display:block; text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s; }
+.rescard:hover{ border-color:var(--sun); background:rgba(255,180,84,0.06); }
+.resname{ font-weight:600; font-size:14.5px; }
+.resmeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+.moneyhead{ display:flex; justify-content:space-between; align-items:baseline; margin:4px 0 10px; }
+.moneybig{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:32px; line-height:1; }
+.moneybig span{ font-size:.42em; color:var(--muted); font-weight:500; }
+.moneyrem{ color:var(--sun); font-size:13px; font-weight:600; }
+.moneynote{ color:var(--muted); font-size:13px; margin:12px 0 16px; }
+.moneynote b{ color:var(--ink); font-family:'Chakra Petch',sans-serif; }
+.quick{ display:flex; gap:9px; margin-top:11px; }
+.quick button{
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line); color:var(--ink);
+  border-radius:11px; padding:11px 0; font-weight:600; font-size:13px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
+  transition:background .2s;
+}
+.quick button:hover{ background:rgba(255,180,84,0.1); border-color:var(--sun); }
+
+.timeline{ position:relative; padding-left:8px; }
+.timeline:before{ content:""; position:absolute; left:20px; top:14px; bottom:14px; width:2px; background:var(--line); }
+.mile{ display:flex; gap:16px; align-items:flex-start; padding:11px 0; position:relative; }
+.mileNode{
+  flex:none; width:26px; height:26px; border-radius:50%; z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--line); background:#0c1c2f; color:var(--muted);
+}
+.nodeDot{ width:8px; height:8px; border-radius:50%; background:var(--muted); }
+.mile.now .mileNode{ background:var(--lift); border-color:var(--lift); }
+.mile.focus .mileNode{ border-color:var(--sun); background:rgba(255,180,84,0.15); }
+.mile.focus .nodeDot{ background:var(--sun); box-shadow:0 0 10px var(--sun); }
+.mileTitle{ font-weight:600; font-size:15.5px; }
+.mile.now .mileTitle{ color:var(--lift); }
+.mile.focus .mileTitle{ color:var(--sun); }
+.mile.locked .mileTitle{ color:var(--muted); }
+.mileMeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+.ytgrid{ display:grid; grid-template-columns:1fr; gap:9px; }
+@media (min-width:560px){ .ytgrid{ grid-template-columns:1fr 1fr; } }
+.yt{ text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:transform .15s, border-color .2s, background .2s; }
+.yt:hover{ transform:translateY(-2px); border-color:rgba(255,80,80,0.45); background:rgba(255,80,80,0.05); }
+.yt.fun:hover{ border-color:var(--lift); background:rgba(68,208,123,0.06); }
+.ytname{ font-weight:600; font-size:14.5px; }
+.ytdesc{ font-size:12.5px; color:var(--muted); line-height:1.45; margin-top:3px; }
+
+.divider{ height:1px; background:var(--line); margin:24px 0 18px; }
+
+.foot{ text-align:center; color:var(--muted); font-size:12.5px; margin-top:24px; font-family:'Chakra Petch',sans-serif; letter-spacing:.4px; }
+
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-3px); } }
+@media (prefers-reduced-motion:reduce){ .glider{ animation:none; } * { transition:none !important; } }
+`;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
