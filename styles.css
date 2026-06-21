@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+}
+body {
+  background: #060f1c;
+  color: #eaf1f8;
+}
+.wrap {
+  --ink:#eaf1f8; --muted:#90a6bd; --lift:#44d07b; --sun:#ffb454;
+  --card:#0f2034; --card2:#13283f; --line:rgba(255,255,255,0.09);
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(120% 80% at 80% -10%, rgba(255,180,84,0.10), transparent 55%),
+    radial-gradient(120% 90% at 0% 0%, rgba(68,208,123,0.08), transparent 50%),
+    linear-gradient(180deg,#081325 0%,#060f1c 100%);
+  min-height:100vh;
+  width: 100%;
+  max-width: none;
+  padding:22px 22px 60px;
+  margin:0 auto;
+}
+@media (min-width:600px){ .wrap{ padding:34px 34px 70px; } }
+@media (min-width:1024px){ .wrap{ padding:40px 40px 80px; } }
+
+.savepill{
+  position:fixed; top:12px; left:50%; transform:translate(-50%,-24px);
+  background:var(--lift); color:#06121f; font-weight:700; font-size:12px;
+  padding:6px 14px; border-radius:999px; opacity:0; pointer-events:none;
+  transition:transform .35s ease, opacity .35s ease; z-index:50;
+  font-family:'Chakra Petch',sans-serif; letter-spacing:.3px;
+}
+.savepill[data-on="true"]{ opacity:1; transform:translate(-50%,0); }
+
+body {
+  margin: 0;
+  background: #060f1c;
+}
+
+.head{ margin-bottom:20px; }
+.pageTabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.tab{
+  background:rgba(255,255,255,0.06); color:var(--ink); border:1px solid var(--line);
+  border-radius:999px; padding:10px 16px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
+  font-size:13px; transition:background .2s, border-color .2s;
+}
+.tab.active{ background:var(--lift); border-color:rgba(68,208,123,0.5); color:#06121f; }
+.tab:hover{ background:rgba(255,255,255,0.1); }
+.badge{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:1.4px;
+  text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--line); padding:6px 12px; border-radius:999px;
+}
+.badgeDot{ width:7px;height:7px;border-radius:50%;background:var(--lift); box-shadow:0 0 10px var(--lift); }
+ h1{
+  font-family:'Chakra Petch',sans-serif; font-weight:700;
+  font-size:clamp(30px,8vw,44px); line-height:1.02; margin:14px 0 8px;
+  letter-spacing:-0.5px;
+}
+.sub{ color:var(--muted); font-size:15px; line-height:1.55; max-width:54ch; margin:0; }
+
+.eyebrow{
+  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--sun); margin-bottom:8px;
+}
+
+.hero{
+  border:1px solid var(--line); border-radius:22px; padding:20px;
+  background:linear-gradient(180deg, rgba(20,40,63,0.9), rgba(10,21,37,0.9));
+  margin-bottom:16px; overflow:hidden;
+}
+.heroTop{ display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+@media (min-width:900px){ .heroTop{ align-items:center; } }
+.bigpct{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:clamp(48px,14vw,72px); line-height:.9; word-break:break-word; }
+.bigpct span{ font-size:.4em; color:var(--muted); margin-left:4px; }
+@media (min-width:900px){ .chips{ flex-direction:row; } }
+.bigsub{ color:var(--ink); opacity:.85; font-size:14px; margin-top:6px; max-width:30ch; }
+.chips{ display:flex; flex-direction:column; gap:8px; }
+.chip{ display:flex; align-items:center; gap:9px; background:rgba(255,255,255,0.04); border:1px solid var(--line); padding:6px 12px 6px 6px; border-radius:14px; }
+.chipPct{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:15px; line-height:1; }
+.chipLabel{ font-size:11px; color:var(--muted); }
+.flightsvg{ width:100%; height:auto; margin-top:14px; display:block; }
+.glider{ animation:bob 4s ease-in-out infinite; transform-box:fill-box; }
+.heroFoot{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-family:'Chakra Petch',sans-serif; letter-spacing:.5px; margin-top:4px; }
+
+.card{
+  border:1px solid var(--line); border-radius:20px; padding:20px;
+  background:rgba(15,32,52,0.55); margin-bottom:16px;
+}
+h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; margin:2px 0 4px; letter-spacing:-.2px; }
+.h3{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:18px; margin:2px 0 10px; }
+.lead{ color:var(--muted); font-size:14px; line-height:1.55; margin:6px 0 16px; }
+
+.tasks{ display:flex; flex-direction:column; gap:10px; }
+.task{
+  display:flex; align-items:flex-start; gap:13px;
+  background:rgba(255,255,255,0.02); border:1px solid var(--line);
+  border-radius:14px; padding:13px; transition:border-color .2s, background .2s;
+  flex-wrap:wrap;
+}
+.task.on{ border-color:rgba(68,208,123,0.4); background:rgba(68,208,123,0.06); }
+.box{
+  flex:none; width:26px; height:26px; border-radius:8px; margin-top:1px;
+  border:2px solid var(--muted); background:transparent; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all .18s;
+}
+.task.on .box{ background:var(--lift); border-color:var(--lift); }
+.taskBody{ flex:1 1 180px; cursor:pointer; min-width:0; }
+.taskTitle{ font-weight:600; font-size:15px; }
+.task.on .taskTitle{ color:var(--lift); }
+.taskNote{ color:var(--muted); font-size:13px; line-height:1.5; margin-top:3px; }
+.taskLink{
+  flex:none; align-self:center; display:inline-flex; align-items:center; gap:5px;
+  color:var(--sun); text-decoration:none; font-size:12.5px; font-weight:600;
+  border:1px solid rgba(255,180,84,0.3); border-radius:10px; padding:7px 11px;
+  white-space:nowrap; transition:background .2s;
+}
+.taskLink:hover{ background:rgba(255,180,84,0.12); }
+
+.facts{ display:grid; grid-template-columns:1fr; gap:8px; margin:14px 0; }
+@media (min-width:700px){ .facts{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:980px){ .facts{ grid-template-columns:repeat(4,1fr); } }
+.facts div{ background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:12px; padding:11px 8px; text-align:center; }
+.reqgrid{ display:grid; grid-template-columns:1fr; gap:8px; margin:14px 0; }
+@media (min-width:700px){ .reqgrid{ grid-template-columns:repeat(2,1fr); } }
+.reqgrid div{ background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:12px; padding:14px 12px; text-align:center; }
+.reqgrid b{ display:block; font-family:'Chakra Petch',sans-serif; font-size:18px; margin-bottom:4px; }
+.reqgrid span{ font-size:13px; color:var(--muted); }
+.facts b{ display:block; font-family:'Chakra Petch',sans-serif; font-size:19px; }
+.facts span{ font-size:11px; color:var(--muted); }
+
+.goalrow{ display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+.goalbar{ flex:1 1 100%; min-width:0; height:10px; background:rgba(255,255,255,0.07); border-radius:99px; overflow:hidden; }
+.goalbar.tall{ height:14px; }
+.goalfill{ height:100%; background:linear-gradient(90deg,#44d07b,#7be3a5); border-radius:99px; transition:width .6s ease; }
+.goalfill.amber{ background:linear-gradient(90deg,#ffb454,#ffd08a); }
+.goalcount{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:14px; color:var(--lift); }
+
+.entry{ display:flex; gap:9px; margin-top:6px; flex-wrap:wrap; }
+.in{
+  flex:1 1 160px; min-width:0;
+  background:rgba(255,255,255,0.04); border:1px solid var(--line);
+  border-radius:12px; padding:12px 14px; color:var(--ink); font-size:15px; font-family:inherit;
+}
+.in:focus{ outline:none; border-color:var(--sun); }
+.in::placeholder{ color:var(--muted); }
+.btn{
+  flex:0 0 auto;
+  background:var(--lift); color:#06121f; border:none; border-radius:12px;
+  padding:0 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
+  transition:filter .2s;
+}
+.btn:hover{ filter:brightness(1.08); }
+
+.scorelist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.scoreitem{
+  display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03);
+  border:1px solid var(--line); border-radius:11px; padding:8px 8px 8px 12px;
+}
+.scoreitem b{ font-family:'Chakra Petch',sans-serif; font-size:15px; }
+.dot{ width:9px;height:9px;border-radius:50%; }
+.dot.good{ background:var(--lift); box-shadow:0 0 8px rgba(68,208,123,.6); }
+.dot.low{ background:var(--sun); }
+.scoredate{ font-size:12px; color:var(--muted); }
+.rm{ background:none; border:none; color:var(--muted); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; }
+.rm:hover{ color:#ff6b6b; }
+
+.reslinks{ display:flex; flex-direction:column; gap:9px; margin-top:18px; }
+.rescard{ display:block; text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s; }
+.rescard:hover{ border-color:var(--sun); background:rgba(255,180,84,0.06); }
+.resname{ font-weight:600; font-size:14.5px; }
+.resmeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+.moneyhead{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin:4px 0 10px; flex-wrap:wrap; }
+.moneybig{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:32px; line-height:1; }
+.moneybig span{ font-size:.42em; color:var(--muted); font-weight:500; }
+.moneyrem{ color:var(--sun); font-size:13px; font-weight:600; }
+.moneynote{ color:var(--muted); font-size:13px; margin:12px 0 16px; }
+.moneynote b{ color:var(--ink); font-family:'Chakra Petch',sans-serif; }
+.quick{ display:flex; gap:9px; margin-top:11px; flex-wrap:wrap; }
+.quick button{
+  flex:1 1 100%; min-width:0;
+  background:rgba(255,255,255,0.04); border:1px solid var(--line); color:var(--ink);
+  border-radius:11px; padding:11px 0; font-weight:600; font-size:13px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
+  transition:background .2s;
+}
+@media (min-width:480px){ .quick button{ flex:1; } }
+.quick button:hover{ background:rgba(255,180,84,0.1); border-color:var(--sun); }
+
+.timeline{ position:relative; padding-left:8px; }
+.timeline:before{ content:""; position:absolute; left:20px; top:14px; bottom:14px; width:2px; background:var(--line); }
+.mile{ display:flex; gap:16px; align-items:flex-start; padding:11px 0; position:relative; }
+.mileNode{
+  flex:none; width:26px; height:26px; border-radius:50%; z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--line); background:#0c1c2f; color:var(--muted);
+}
+.nodeDot{ width:8px; height:8px; border-radius:50%; background:var(--muted); }
+.mile.now .mileNode{ background:var(--lift); border-color:var(--lift); }
+.mile.focus .mileNode{ border-color:var(--sun); background:rgba(255,180,84,0.15); }
+.mile.focus .nodeDot{ background:var(--sun); box-shadow:0 0 10px var(--sun); }
+.mileTitle{ font-weight:600; font-size:15.5px; }
+.mile.now .mileTitle{ color:var(--lift); }
+.mile.focus .mileTitle{ color:var(--sun); }
+.mile.locked .mileTitle{ color:var(--muted); }
+.mileMeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+.ytgrid{ display:grid; grid-template-columns:1fr; gap:9px; }
+@media (min-width:560px){ .ytgrid{ grid-template-columns:1fr 1fr; } }
+.yt{ text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:transform .15s, border-color .2s, background .2s; }
+.yt:hover{ transform:translateY(-2px); border-color:rgba(255,80,80,0.45); background:rgba(255,80,80,0.05); }
+.yt.fun:hover{ border-color:var(--lift); background:rgba(68,208,123,0.06); }
+.ytname{ font-weight:600; font-size:14.5px; }
+.ytdesc{ font-size:12.5px; color:var(--muted); line-height:1.45; margin-top:3px; }
+
+.divider{ height:1px; background:var(--line); margin:24px 0 18px; }
+
+.foot{ text-align:center; color:var(--muted); font-size:12.5px; margin-top:24px; font-family:'Chakra Petch',sans-serif; letter-spacing:.4px; }
+
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-3px); } }
+@media (prefers-reduced-motion:reduce){ .glider{ animation:none; } * { transition:none !important; } }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glider Prep Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="serve-warning" style="display:none; padding:18px; margin:24px; border:1px solid #f5c2c7; background:#fff0f0; color:#611; font-family:system-ui, sans-serif; border-radius:12px; max-width:760px;">
+      <strong>Local file warning:</strong> This page needs to be served over HTTP, not opened directly from your file system.
+      Run a local web server in the project folder (for example, <code>python -m http.server</code>) and open <code>http://localhost:8000</code> instead.
+    </div>
+    <div id="runtime-warning" style="display:none; padding:18px; margin:24px; border:1px solid #f5c2c7; background:#fff0f0; color:#611; font-family:system-ui, sans-serif; border-radius:12px; max-width:760px;"></div>
+    <div id="root"></div>
+
+    <script>
+      const showRuntimeWarning = (message) => {
+        const el = document.getElementById("runtime-warning");
+        el.innerHTML = `<strong>App load problem:</strong> ${message}`;
+        el.style.display = "block";
+      };
+
+      if (window.location.protocol === "file:") {
+        document.getElementById("serve-warning").style.display = "block";
+      }
+
+      window.addEventListener("load", () => {
+        if (!window.React || !window.ReactDOM) {
+          showRuntimeWarning("React or ReactDOM failed to load. Open DevTools console and check your network.");
+        }
+      });
+
+      window.addEventListener("error", (event) => {
+        if (event.filename && event.filename.endsWith("app.js")) {
+          showRuntimeWarning("There was an error running app.js. Open DevTools console for details.");
+        }
+      });
+    </script>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="app.js"></script>
+  </body>
+</html>
