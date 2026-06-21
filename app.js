@@ -1,7 +1,5 @@
 const { useState, useEffect, useMemo, useRef } = React;
 
-// ---------- static content ----------
-
 const TASKS = [
   {
     id: "handbook",
@@ -80,8 +78,6 @@ const BUDGET_GOAL = 6000;
 const ytSearch = (name) =>
   "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " glider soaring");
 
-// ---------- helpers ----------
-
 function bezier(t, p0, p1, p2) {
   const mt = 1 - t;
   return {
@@ -96,8 +92,6 @@ function bezierAngle(t, p0, p1, p2) {
   const dy = 2 * mt * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
   return (Math.atan2(dy, dx) * 180) / Math.PI;
 }
-
-// ---------- hero flight path ----------
 
 function FlightPath({ pct }) {
   const P0 = { x: 18, y: 158 };
@@ -130,17 +124,13 @@ function FlightPath({ pct }) {
           </feMerge>
         </filter>
       </defs>
-
       {[0, 1, 2, 3].map((i) => (
         <line key={i} x1="14" x2="306" y1={40 + i * 36} y2={40 + i * 36} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       ))}
-
       <polyline points={toStr(fullPts)} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" strokeDasharray="2 5" strokeLinecap="round" />
       <polyline points={toStr(done)} fill="none" stroke="url(#lift)" strokeWidth="3.4" strokeLinecap="round" />
-
       <circle cx={P0.x} cy={P0.y} r="3" fill="#8da2b8" />
       <circle cx={P2.x} cy={P2.y} r="4" fill={t >= 1 ? "#44d07b" : "rgba(255,180,84,0.5)"} />
-
       <g transform={`translate(${plane.x} ${plane.y}) rotate(${ang})`} filter="url(#glow)" className="glider">
         <ellipse cx="0" cy="0" rx="11" ry="1.9" fill="#eaf1f8" />
         <path d="M 3 0 L -9 -11 M 3 0 L -9 11" stroke="#eaf1f8" strokeWidth="2" strokeLinecap="round" />
@@ -150,8 +140,6 @@ function FlightPath({ pct }) {
     </svg>
   );
 }
-
-// ---------- small ui ----------
 
 function Eyebrow({ children }) {
   return <div className="eyebrow">{children}</div>;
@@ -178,8 +166,6 @@ function Ring({ pct, label }) {
     </div>
   );
 }
-
-// ---------- main ----------
 
 function App() {
   const [loaded, setLoaded] = useState(false);
