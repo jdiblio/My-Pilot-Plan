@@ -1,48 +1,12 @@
 const { useState, useEffect, useMemo, useRef } = React;
 
 const TASKS = [
-  {
-    id: "handbook",
-    title: "Read the FAA Glider Flying Handbook",
-    note: "The free book everything is built on. Start with how gliders fly, the parts, and basic aerodynamics.",
-    link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/glider_handbook",
-    linkLabel: "Open the handbook",
-  },
-  {
-    id: "iacra",
-    title: "Register for IACRA and save your FTN",
-    note: "You can do this part on your own. You are already old enough for the student certificate at 14.",
-    link: "https://iacra.faa.gov",
-    linkLabel: "Go to IACRA",
-  },
-  {
-    id: "studytool",
-    title: "Start a written exam study tool",
-    note: "Pick one and begin logging practice scores in the Written Exam tracker below.",
-    link: "https://gliderpilotsgroundschool.com",
-    linkLabel: "See study options",
-  },
-  {
-    id: "sgs",
-    title: "Memorize the SGS 2-33 airspeeds and limits",
-    note: "The Schweizer 2-33 is the trainer you will fly. Walk in already knowing your aircraft.",
-    link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/glider_handbook",
-    linkLabel: "Reference material",
-  },
-  {
-    id: "ssa",
-    title: "Join the SSA youth membership",
-    note: "45 dollars per year. Unlocks scholarships, the magazine, and training videos.",
-    link: "https://www.ssa.org",
-    linkLabel: "Join the SSA",
-  },
-  {
-    id: "skyvector",
-    title: "Learn Denver area airspace on SkyVector",
-    note: "Get comfortable with the airspace and chart symbols you will need for your cross country plan.",
-    link: "https://skyvector.com",
-    linkLabel: "Open SkyVector",
-  },
+  { id: "handbook", title: "Read the FAA Glider Flying Handbook", note: "The free book everything is built on. Start with how gliders fly, the parts, and basic aerodynamics.", link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/glider_handbook", linkLabel: "Open the handbook" },
+  { id: "iacra", title: "Register for IACRA and save your FTN", note: "You can do this part on your own. You are already old enough for the student certificate at 14.", link: "https://iacra.faa.gov", linkLabel: "Go to IACRA" },
+  { id: "studytool", title: "Start a written exam study tool", note: "Pick one and begin logging practice scores in the Written Exam tracker below.", link: "https://gliderpilotsgroundschool.com", linkLabel: "See study options" },
+  { id: "sgs", title: "Memorize the SGS 2-33 airspeeds and limits", note: "The Schweizer 2-33 is the trainer you will fly. Walk in already knowing your aircraft.", link: "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/glider_handbook", linkLabel: "Reference material" },
+  { id: "ssa", title: "Join the SSA youth membership", note: "45 dollars per year. Unlocks scholarships, the magazine, and training videos.", link: "https://www.ssa.org", linkLabel: "Join the SSA" },
+  { id: "skyvector", title: "Learn Denver area airspace on SkyVector", note: "Get comfortable with the airspace and chart symbols you will need for your cross country plan.", link: "https://skyvector.com", linkLabel: "Open SkyVector" },
 ];
 
 const CHANNELS = [
@@ -75,8 +39,7 @@ const MILESTONES = [
 ];
 
 const BUDGET_GOAL = 6000;
-const ytSearch = (name) =>
-  "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " glider soaring");
+const ytSearch = (name) => "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " glider soaring");
 
 function bezier(t, p0, p1, p2) {
   const mt = 1 - t;
@@ -118,10 +81,7 @@ function FlightPath({ pct }) {
         </linearGradient>
         <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="2.4" result="b" />
-          <feMerge>
-            <feMergeNode in="b" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
       {[0, 1, 2, 3].map((i) => (
@@ -153,11 +113,7 @@ function Ring({ pct, label }) {
     <div className="chip">
       <svg width="42" height="42" viewBox="0 0 42 42">
         <circle cx="21" cy="21" r={r} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="4" />
-        <circle
-          cx="21" cy="21" r={r} fill="none" stroke="#44d07b" strokeWidth="4"
-          strokeDasharray={c} strokeDashoffset={off} strokeLinecap="round"
-          transform="rotate(-90 21 21)" style={{ transition: "stroke-dashoffset .6s ease" }}
-        />
+        <circle cx="21" cy="21" r={r} fill="none" stroke="#44d07b" strokeWidth="4" strokeDasharray={c} strokeDashoffset={off} strokeLinecap="round" transform="rotate(-90 21 21)" style={{ transition: "stroke-dashoffset .6s ease" }} />
       </svg>
       <div>
         <div className="chipPct">{Math.round(pct)}%</div>
@@ -172,7 +128,6 @@ function App() {
   const [tasks, setTasks] = useState({});
   const [scores, setScores] = useState([]);
   const [saved, setSaved] = useState(0);
-
   const [scoreInput, setScoreInput] = useState("");
   const [savedInput, setSavedInput] = useState("");
   const [justSaved, setJustSaved] = useState(false);
@@ -191,10 +146,7 @@ function App() {
           setSaved(typeof d.saved === "number" ? d.saved : 0);
           setSavedInput(d.saved ? String(d.saved) : "");
         }
-      } catch (e) {
-      } finally {
-        setLoaded(true);
-      }
+      } catch (e) {} finally { setLoaded(true); }
     })();
   }, []);
 
@@ -212,8 +164,7 @@ function App() {
         setJustSaved(true);
         clearTimeout(saveTimer.current);
         saveTimer.current = setTimeout(() => setJustSaved(false), 1100);
-      } catch (e) {
-      }
+      } catch (e) {}
     })();
   }, [tasks, scores, saved, loaded]);
 
@@ -224,12 +175,7 @@ function App() {
   const budgetFrac = Math.min(saved / BUDGET_GOAL, 1);
   const overall = Math.round((taskFrac * 0.5 + writtenFrac * 0.3 + budgetFrac * 0.2) * 100);
 
-  const subline =
-    overall >= 100 ? "Cruise altitude. You are ready to fly."
-    : overall >= 67 ? "High and fast. Almost at cruise."
-    : overall >= 34 ? "Climbing well. Stay in the lift."
-    : overall > 0 ? "Off the ground. Keep the nose up."
-    : "Wheels still chocked. Pick a task and start your climb.";
+  const subline = overall >= 100 ? "Cruise altitude. You are ready to fly." : overall >= 67 ? "High and fast. Almost at cruise." : overall >= 34 ? "Climbing well. Stay in the lift." : overall > 0 ? "Off the ground. Keep the nose up." : "Wheels still chocked. Pick a task and start your climb.";
 
   const toggle = (id) => setTasks((p) => ({ ...p, [id]: !p[id] }));
 
@@ -240,6 +186,7 @@ function App() {
     setScores((p) => [{ id: Date.now(), score: v, date }, ...p]);
     setScoreInput("");
   };
+
   const removeScore = (id) => setScores((p) => p.filter((s) => s.id !== id));
 
   const commitSaved = () => {
@@ -247,10 +194,10 @@ function App() {
     setSaved(v);
     setSavedInput(String(v));
   };
+
   const quickAdd = (amt) => {
-    const v = Math.max(0, saved + amt);
-    setSaved(v);
-    setSavedInput(String(v));
+    setSaved((s) => Math.max(0, s + amt));
+    setSavedInput((s) => String(Math.max(0, parseInt(s || "0") + amt)));
   };
 
   const lessonsCovered = Math.floor(saved / 350);
@@ -259,27 +206,17 @@ function App() {
   return (
     <div className="wrap">
       <style>{css}</style>
-
       <div className="savepill" data-on={justSaved}>Progress saved</div>
 
       <header className="head">
-        <div className="badge">
-          <span className="badgeDot" /> Mile High Gliding · Waitlist prep
-        </div>
+        <div className="badge"><span className="badgeDot" /> Mile High Gliding · Waitlist prep</div>
         <h1>Glider Prep Dashboard</h1>
-        <p className="sub">
-          Every task you finish is altitude in the bank. Build the knowledge now so your real lessons are
-          faster, cheaper, and a lot more fun.
-        </p>
+        <p className="sub">Every task you finish is altitude in the bank. Build the knowledge now so your real lessons are faster, cheaper, and a lot more fun.</p>
       </header>
 
       <section className="hero">
         <div className="heroTop">
-          <div>
-            <Eyebrow>Overall readiness</Eyebrow>
-            <div className="bigpct">{overall}<span>%</span></div>
-            <div className="bigsub">{subline}</div>
-          </div>
+          <div><Eyebrow>Overall readiness</Eyebrow><div className="bigpct">{overall}<span>%</span></div><div className="bigsub">{subline}</div></div>
           <div className="chips">
             <Ring pct={taskFrac * 100} label="Tasks" />
             <Ring pct={writtenFrac * 100} label="Written" />
@@ -287,10 +224,7 @@ function App() {
           </div>
         </div>
         <FlightPath pct={overall} />
-        <div className="heroFoot">
-          <span>Wheels up</span>
-          <span>Private glider license</span>
-        </div>
+        <div className="heroFoot"><span>Wheels up</span><span>Private glider license</span></div>
       </section>
 
       <section className="card">
@@ -303,17 +237,14 @@ function App() {
             return (
               <div key={t.id} className={"task" + (on ? " on" : "")}>
                 <button className="box" onClick={() => toggle(t.id)} aria-pressed={on} aria-label={"Mark " + t.title}>
-                  {on && (
-                    <svg viewBox="0 0 24 24" width="15" height="15"><path d="M5 13l4 4L19 7" fill="none" stroke="#06121f" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  )}
+                  {on && <svg viewBox="0 0 24 24" width="15" height="15"><path d="M5 13l4 4L19 7" fill="none" stroke="#06121f" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                 </button>
                 <div className="taskBody" onClick={() => toggle(t.id)}>
                   <div className="taskTitle">{t.title}</div>
                   <div className="taskNote">{t.note}</div>
                 </div>
                 <a className="taskLink" href={t.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                  {t.linkLabel}
-                  <svg viewBox="0 0 24 24" width="13" height="13"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  {t.linkLabel}<svg viewBox="0 0 24 24" width="13" height="13"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </a>
               </div>
             );
@@ -324,30 +255,13 @@ function App() {
       <section className="card">
         <Eyebrow>Written exam tracker</Eyebrow>
         <h2>Private Pilot Glider (PGL)</h2>
-        <div className="facts">
-          <div><b>60</b><span>questions</span></div>
-          <div><b>70%</b><span>to pass</span></div>
-          <div><b>24 mo</b><span>score valid</span></div>
-          <div><b>$175</b><span>test fee</span></div>
-        </div>
-        <p className="lead">
-          Your goal is three practice scores at 90 percent or higher. Hit that and you are ready for the real one.
-        </p>
+        <div className="facts"><div><b>60</b><span>questions</span></div><div><b>70%</b><span>to pass</span></div><div><b>24 mo</b><span>score valid</span></div><div><b>$175</b><span>test fee</span></div></div>
+        <p className="lead">Your goal is three practice scores at 90 percent or higher. Hit that and you are ready for the real one.</p>
 
-        <div className="goalrow">
-          <div className="goalbar">
-            <div className="goalfill" style={{ width: `${(Math.min(scores90, 3) / 3) * 100}%` }} />
-          </div>
-          <div className="goalcount">{Math.min(scores90, 3)} / 3</div>
-        </div>
+        <div className="goalrow"><div className="goalbar"><div className="goalfill" style={{ width: `${(Math.min(scores90, 3) / 3) * 100}%` }} /></div><div className="goalcount">{Math.min(scores90, 3)} / 3</div></div>
 
         <div className="entry">
-          <input
-            className="in" type="number" min="0" max="100" inputMode="numeric"
-            placeholder="Log a practice score" value={scoreInput}
-            onChange={(e) => setScoreInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addScore()}
-          />
+          <input className="in" type="number" min="0" max="100" inputMode="numeric" placeholder="Log a practice score" value={scoreInput} onChange={(e) => setScoreInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addScore()} />
           <button className="btn" onClick={addScore}>Add score</button>
         </div>
 
@@ -365,18 +279,9 @@ function App() {
         )}
 
         <div className="reslinks">
-          <a href="https://gliderpilotsgroundschool.com" target="_blank" rel="noopener noreferrer" className="rescard">
-            <div className="resname">Glider Pilots Ground School</div>
-            <div className="resmeta">Book and live course · about 30 dollars</div>
-          </a>
-          <a href="https://apps.apple.com/us/app/faa-private-pilot-prep/id552933297" target="_blank" rel="noopener noreferrer" className="rescard">
-            <div className="resname">Dauntless GroundSchool</div>
-            <div className="resmeta">App, covers PGL · about 60 to 70 dollars</div>
-          </a>
-          <a href="https://faa.psiexams.com" target="_blank" rel="noopener noreferrer" className="rescard">
-            <div className="resname">Schedule the real test</div>
-            <div className="resmeta">faa.psiexams.com · when you are ready</div>
-          </a>
+          <a href="https://gliderpilotsgroundschool.com" target="_blank" rel="noopener noreferrer" className="rescard"><div className="resname">Glider Pilots Ground School</div><div className="resmeta">Book and live course · about 30 dollars</div></a>
+          <a href="https://apps.apple.com/us/app/faa-private-pilot-prep/id552933297" target="_blank" rel="noopener noreferrer" className="rescard"><div className="resname">Dauntless GroundSchool</div><div className="resmeta">App, covers PGL · about 60 to 70 dollars</div></a>
+          <a href="https://faa.psiexams.com" target="_blank" rel="noopener noreferrer" className="rescard"><div className="resname">Schedule the real test</div><div className="resmeta">faa.psiexams.com · when you are ready</div></a>
         </div>
       </section>
 
@@ -384,25 +289,12 @@ function App() {
         <Eyebrow>Budget tracker</Eyebrow>
         <h2>The climb to 6,000 dollars</h2>
         <p className="lead">Full path to a private glider license runs about 6,000 dollars. Lessons cost roughly 250 to 450 dollars each.</p>
-
-        <div className="moneyhead">
-          <div className="moneybig">${saved.toLocaleString()}<span> saved</span></div>
-          <div className="moneyrem">${remaining.toLocaleString()} to go</div>
-        </div>
-        <div className="goalbar tall">
-          <div className="goalfill amber" style={{ width: `${budgetFrac * 100}%` }} />
-        </div>
-        <div className="moneynote">
-          That covers about <b>{lessonsCovered}</b> {lessonsCovered === 1 ? "lesson" : "lessons"} so far.
-        </div>
+        <div className="moneyhead"><div className="moneybig">${saved.toLocaleString()}<span> saved</span></div><div className="moneyrem">${remaining.toLocaleString()} to go</div></div>
+        <div className="goalbar tall"><div className="goalfill amber" style={{ width: `${budgetFrac * 100}%` }} /></div>
+        <div className="moneynote">That covers about <b>{lessonsCovered}</b> {lessonsCovered === 1 ? "lesson" : "lessons"} so far.</div>
 
         <div className="entry">
-          <input
-            className="in" type="number" min="0" inputMode="numeric"
-            placeholder="Set total saved" value={savedInput}
-            onChange={(e) => setSavedInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && commitSaved()}
-          />
+          <input className="in" type="number" min="0" inputMode="numeric" placeholder="Set total saved" value={savedInput} onChange={(e) => setSavedInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && commitSaved()} />
           <button className="btn" onClick={commitSaved}>Update</button>
         </div>
         <div className="quick">
@@ -427,10 +319,7 @@ function App() {
                   <span className="nodeDot" />
                 )}
               </div>
-              <div className="mileBody">
-                <div className="mileTitle">{m.title}</div>
-                <div className="mileMeta">{m.meta}</div>
-              </div>
+              <div className="mileBody"><div className="mileTitle">{m.title}</div><div className="mileMeta">{m.meta}</div></div>
             </div>
           ))}
         </div>
@@ -448,9 +337,7 @@ function App() {
             </a>
           ))}
         </div>
-
         <div className="divider" />
-
         <Eyebrow>Optional but fun</Eyebrow>
         <h3 className="h3">Not required, just awesome</h3>
         <div className="ytgrid">
@@ -463,66 +350,25 @@ function App() {
         </div>
       </section>
 
-      <footer className="foot">
-        Built for the climb. Keep the nose up and the airspeed alive.
-      </footer>
+      <footer className="foot">Built for the climb. Keep the nose up and the airspeed alive.</footer>
     </div>
   );
 }
 
 const css = `
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 * { box-sizing: border-box; }
-.wrap {
-  --ink:#eaf1f8; --muted:#90a6bd; --lift:#44d07b; --sun:#ffb454;
-  --card:#0f2034; --card2:#13283f; --line:rgba(255,255,255,0.09);
-  font-family:'Inter',system-ui,sans-serif;
-  color:var(--ink);
-  background:
-    radial-gradient(120% 80% at 80% -10%, rgba(255,180,84,0.10), transparent 55%),
-    radial-gradient(120% 90% at 0% 0%, rgba(68,208,123,0.08), transparent 50%),
-    linear-gradient(180deg,#081325 0%,#060f1c 100%);
-  min-height:100vh;
-  padding:22px 16px 60px;
-  max-width:760px; margin:0 auto;
-}
+.wrap { --ink:#eaf1f8; --muted:#90a6bd; --lift:#44d07b; --sun:#ffb454; --card:#0f2034; --card2:#13283f; --line:rgba(255,255,255,0.09); font-family:'Inter',system-ui,sans-serif; color:var(--ink); background: radial-gradient(120% 80% at 80% -10%, rgba(255,180,84,0.10), transparent 55%), radial-gradient(120% 90% at 0% 0%, rgba(68,208,123,0.08), transparent 50%), linear-gradient(180deg,#081325 0%,#060f1c 100%); min-height:100vh; padding:22px 16px 60px; max-width:760px; margin:0 auto; }
 @media (min-width:600px){ .wrap{ padding:34px 28px 70px; } }
-
-.savepill{
-  position:fixed; top:12px; left:50%; transform:translate(-50%,-24px);
-  background:var(--lift); color:#06121f; font-weight:700; font-size:12px;
-  padding:6px 14px; border-radius:999px; opacity:0; pointer-events:none;
-  transition:transform .35s ease, opacity .35s ease; z-index:50;
-  font-family:'Chakra Petch',sans-serif; letter-spacing:.3px;
-}
+.savepill{ position:fixed; top:12px; left:50%; transform:translate(-50%,-24px); background:var(--lift); color:#06121f; font-weight:700; font-size:12px; padding:6px 14px; border-radius:999px; opacity:0; pointer-events:none; transition:transform .35s ease, opacity .35s ease; z-index:50; font-family:'Chakra Petch',sans-serif; letter-spacing:.3px; }
 .savepill[data-on="true"]{ opacity:1; transform:translate(-50%,0); }
-
 .head{ margin-bottom:20px; }
-.badge{
-  display:inline-flex; align-items:center; gap:7px;
-  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:1.4px;
-  text-transform:uppercase; color:var(--muted);
-  border:1px solid var(--line); padding:6px 12px; border-radius:999px;
-}
+.badge{ display:inline-flex; align-items:center; gap:7px; font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); padding:6px 12px; border-radius:999px; }
 .badgeDot{ width:7px;height:7px;border-radius:50%;background:var(--lift); box-shadow:0 0 10px var(--lift); }
-h1{
-  font-family:'Chakra Petch',sans-serif; font-weight:700;
-  font-size:clamp(30px,8vw,44px); line-height:1.02; margin:14px 0 8px;
-  letter-spacing:-0.5px;
-}
+h1{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:clamp(30px,8vw,44px); line-height:1.02; margin:14px 0 8px; letter-spacing:-0.5px; }
 .sub{ color:var(--muted); font-size:15px; line-height:1.55; max-width:54ch; margin:0; }
-
-.eyebrow{
-  font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:2px;
-  text-transform:uppercase; color:var(--sun); margin-bottom:8px;
-}
-
-.hero{
-  border:1px solid var(--line); border-radius:22px; padding:20px;
-  background:linear-gradient(180deg, rgba(20,40,63,0.9), rgba(10,21,37,0.9));
-  margin-bottom:16px; overflow:hidden;
-}
+.eyebrow{ font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--sun); margin-bottom:8px; }
+.hero{ border:1px solid var(--line); border-radius:22px; padding:20px; background:linear-gradient(180deg, rgba(20,40,63,0.9), rgba(10,21,37,0.9)); margin-bottom:16px; overflow:hidden; }
 .heroTop{ display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
 .bigpct{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:clamp(48px,14vw,72px); line-height:.9; }
 .bigpct span{ font-size:.4em; color:var(--muted); margin-left:4px; }
@@ -534,71 +380,39 @@ h1{
 .flightsvg{ width:100%; height:auto; margin-top:14px; display:block; }
 .glider{ animation:bob 4s ease-in-out infinite; transform-box:fill-box; }
 .heroFoot{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-family:'Chakra Petch',sans-serif; letter-spacing:.5px; margin-top:4px; }
-
-.card{
-  border:1px solid var(--line); border-radius:20px; padding:20px;
-  background:rgba(15,32,52,0.55); margin-bottom:16px;
-}
+.card{ border:1px solid var(--line); border-radius:20px; padding:20px; background:rgba(15,32,52,0.55); margin-bottom:16px; }
 h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; margin:2px 0 4px; letter-spacing:-.2px; }
 .h3{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:18px; margin:2px 0 10px; }
 .lead{ color:var(--muted); font-size:14px; line-height:1.55; margin:6px 0 16px; }
-
 .tasks{ display:flex; flex-direction:column; gap:10px; }
-.task{
-  display:flex; align-items:flex-start; gap:13px;
-  background:rgba(255,255,255,0.02); border:1px solid var(--line);
-  border-radius:14px; padding:13px; transition:border-color .2s, background .2s;
-}
+.task{ display:flex; align-items:flex-start; gap:13px; background:rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:14px; padding:13px; transition:border-color .2s, background .2s; }
 .task.on{ border-color:rgba(68,208,123,0.4); background:rgba(68,208,123,0.06); }
-.box{
-  flex:none; width:26px; height:26px; border-radius:8px; margin-top:1px;
-  border:2px solid var(--muted); background:transparent; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; transition:all .18s;
-}
+.box{ flex:none; width:26px; height:26px; border-radius:8px; margin-top:1px; border:2px solid var(--muted); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .18s; }
 .task.on .box{ background:var(--lift); border-color:var(--lift); }
 .taskBody{ flex:1; cursor:pointer; min-width:0; }
 .taskTitle{ font-weight:600; font-size:15px; }
 .task.on .taskTitle{ color:var(--lift); }
 .taskNote{ color:var(--muted); font-size:13px; line-height:1.5; margin-top:3px; }
-.taskLink{
-  flex:none; align-self:center; display:inline-flex; align-items:center; gap:5px;
-  color:var(--sun); text-decoration:none; font-size:12.5px; font-weight:600;
-  border:1px solid rgba(255,180,84,0.3); border-radius:10px; padding:7px 11px;
-  white-space:nowrap; transition:background .2s;
-}
+.taskLink{ flex:none; align-self:center; display:inline-flex; align-items:center; gap:5px; color:var(--sun); text-decoration:none; font-size:12.5px; font-weight:600; border:1px solid rgba(255,180,84,0.3); border-radius:10px; padding:7px 11px; white-space:nowrap; transition:background .2s; }
 .taskLink:hover{ background:rgba(255,180,84,0.12); }
-
 .facts{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
 .facts div{ background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:12px; padding:11px 8px; text-align:center; }
 .facts b{ display:block; font-family:'Chakra Petch',sans-serif; font-size:19px; }
 .facts span{ font-size:11px; color:var(--muted); }
-
 .goalrow{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
 .goalbar{ flex:1; height:10px; background:rgba(255,255,255,0.07); border-radius:99px; overflow:hidden; }
 .goalbar.tall{ height:14px; }
 .goalfill{ height:100%; background:linear-gradient(90deg,#44d07b,#7be3a5); border-radius:99px; transition:width .6s ease; }
 .goalfill.amber{ background:linear-gradient(90deg,#ffb454,#ffd08a); }
 .goalcount{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:14px; color:var(--lift); }
-
 .entry{ display:flex; gap:9px; margin-top:6px; }
-.in{
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line);
-  border-radius:12px; padding:12px 14px; color:var(--ink); font-size:15px; font-family:inherit;
-}
+.in{ flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line); border-radius:12px; padding:12px 14px; color:var(--ink); font-size:15px; font-family:inherit; }
 .in:focus{ outline:none; border-color:var(--sun); }
 .in::placeholder{ color:var(--muted); }
-.btn{
-  background:var(--lift); color:#06121f; border:none; border-radius:12px;
-  padding:0 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
-  transition:filter .2s;
-}
+.btn{ background:var(--lift); color:#06121f; border:none; border-radius:12px; padding:0 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Chakra Petch',sans-serif; transition:filter .2s; }
 .btn:hover{ filter:brightness(1.08); }
-
 .scorelist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-.scoreitem{
-  display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03);
-  border:1px solid var(--line); border-radius:11px; padding:8px 8px 8px 12px;
-}
+.scoreitem{ display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:11px; padding:8px 8px 8px 12px; }
 .scoreitem b{ font-family:'Chakra Petch',sans-serif; font-size:15px; }
 .dot{ width:9px;height:9px;border-radius:50%; }
 .dot.good{ background:var(--lift); box-shadow:0 0 8px rgba(68,208,123,.6); }
@@ -606,13 +420,11 @@ h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; marg
 .scoredate{ font-size:12px; color:var(--muted); }
 .rm{ background:none; border:none; color:var(--muted); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; }
 .rm:hover{ color:#ff6b6b; }
-
 .reslinks{ display:flex; flex-direction:column; gap:9px; margin-top:18px; }
 .rescard{ display:block; text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:border-color .2s, background .2s; }
 .rescard:hover{ border-color:var(--sun); background:rgba(255,180,84,0.06); }
 .resname{ font-weight:600; font-size:14.5px; }
 .resmeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
-
 .moneyhead{ display:flex; justify-content:space-between; align-items:baseline; margin:4px 0 10px; }
 .moneybig{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:32px; line-height:1; }
 .moneybig span{ font-size:.42em; color:var(--muted); font-weight:500; }
@@ -620,21 +432,12 @@ h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; marg
 .moneynote{ color:var(--muted); font-size:13px; margin:12px 0 16px; }
 .moneynote b{ color:var(--ink); font-family:'Chakra Petch',sans-serif; }
 .quick{ display:flex; gap:9px; margin-top:11px; }
-.quick button{
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line); color:var(--ink);
-  border-radius:11px; padding:11px 0; font-weight:600; font-size:13px; cursor:pointer; font-family:'Chakra Petch',sans-serif;
-  transition:background .2s;
-}
+.quick button{ flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--line); color:var(--ink); border-radius:11px; padding:11px 0; font-weight:600; font-size:13px; cursor:pointer; font-family:'Chakra Petch',sans-serif; transition:background .2s; }
 .quick button:hover{ background:rgba(255,180,84,0.1); border-color:var(--sun); }
-
 .timeline{ position:relative; padding-left:8px; }
 .timeline:before{ content:""; position:absolute; left:20px; top:14px; bottom:14px; width:2px; background:var(--line); }
 .mile{ display:flex; gap:16px; align-items:flex-start; padding:11px 0; position:relative; }
-.mileNode{
-  flex:none; width:26px; height:26px; border-radius:50%; z-index:1;
-  display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--line); background:#0c1c2f; color:var(--muted);
-}
+.mileNode{ flex:none; width:26px; height:26px; border-radius:50%; z-index:1; display:flex; align-items:center; justify-content:center; border:2px solid var(--line); background:#0c1c2f; color:var(--muted); }
 .nodeDot{ width:8px; height:8px; border-radius:50%; background:var(--muted); }
 .mile.now .mileNode{ background:var(--lift); border-color:var(--lift); }
 .mile.focus .mileNode{ border-color:var(--sun); background:rgba(255,180,84,0.15); }
@@ -644,7 +447,6 @@ h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; marg
 .mile.focus .mileTitle{ color:var(--sun); }
 .mile.locked .mileTitle{ color:var(--muted); }
 .mileMeta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
-
 .ytgrid{ display:grid; grid-template-columns:1fr; gap:9px; }
 @media (min-width:560px){ .ytgrid{ grid-template-columns:1fr 1fr; } }
 .yt{ text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:13px; padding:13px 15px; background:rgba(255,255,255,0.02); transition:transform .15s, border-color .2s, background .2s; }
@@ -652,11 +454,8 @@ h2{ font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:22px; marg
 .yt.fun:hover{ border-color:var(--lift); background:rgba(68,208,123,0.06); }
 .ytname{ font-weight:600; font-size:14.5px; }
 .ytdesc{ font-size:12.5px; color:var(--muted); line-height:1.45; margin-top:3px; }
-
 .divider{ height:1px; background:var(--line); margin:24px 0 18px; }
-
 .foot{ text-align:center; color:var(--muted); font-size:12.5px; margin-top:24px; font-family:'Chakra Petch',sans-serif; letter-spacing:.4px; }
-
 @keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-3px); } }
 @media (prefers-reduced-motion:reduce){ .glider{ animation:none; } * { transition:none !important; } }
 `;
